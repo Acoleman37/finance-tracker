@@ -1,23 +1,23 @@
-// Variable to hold db connection
+// Create variable to hold db connection
 let db;
 
-// Establish connection to indexedDB database called 'finance-tracker' set to version 1
-const request = indexedDB.open('finance-tracker', 1);
+// Establish a connection to IndexedDB database called 'budget_tracker' and set it to version 1
+const request = indexedDB.open('budget_tracker', 1);
 
-// Event will emit if the db version changes
+// This event will emit if the database version changes
 request.onupgradeneeded = function(event) {
 
     // Save a reference to the database
     const db = event.target.result;
 
-    // Creates an object store (table) called 'new_transaction', set to have auto incrementing primary key of sorts
-    db.createObjectSTore('new_transaction', { autoIncrement: true });
+    // Create an object store (table) called `new_transaction`, set it to have an auto incrementing primary key of sorts
+    db.createObjectStore('new_transaction', { autoIncrement: true });
 };
 
-
+// Upon a successful
 request.onsuccess = function(event) {
 
-    // When db is successufully created with its object store or established connection, save reference to db in global variable
+    // When db is successfully created with its object store or simply established a connection, save reference to db in global variable
     db = event.target.result;
 
     // Check if app is online, if yes run uploadTransaction() function to send all local db data to api
@@ -27,7 +27,7 @@ request.onsuccess = function(event) {
 };
 
 request.onerror = function(event) {
-    // log error here
+    // Log error here
     console.log(event.target.errorCode);
 };
 
@@ -92,4 +92,4 @@ function uploadTransaction() {
 }
 
 // Listen for app coming back online
-window.addEventListener('online', uploadTransaction); 
+window.addEventListener('online', uploadTransaction);
